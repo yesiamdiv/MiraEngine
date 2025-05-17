@@ -44,6 +44,7 @@ namespace Mira
 
     protected:
 
+
         Backend::Window* _window;
         SDL_GLContext _glContext;
         

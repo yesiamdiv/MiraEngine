@@ -13,12 +13,17 @@ namespace Backend
 
     public:
         bool Init(const std::string &title, int width, int height);
+
         void Shutdown();
 
         int GetWidth() const { return _windowSize.y; };
+
         int GetHeight() const { return _windowSize.x; };
+
         glm::vec2 GetWindowSize() const { return _windowSize; };
+
         SDL_Window* GetSDLWindow();
+
     protected:
         //SDL_GLContext GetGLContext() const { return _glContext; }
 
