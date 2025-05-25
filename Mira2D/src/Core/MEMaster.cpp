@@ -39,7 +39,7 @@ namespace Mira
     void Master::CreateWindow(const std::string &title, int w, int h)
     {
         InitSDL();
-        _window = new Window();
+        _window = new Backend::Window();
         _window->Init(title, w, h);
         std::cout << "Window \"" << title << "\" created with dimensions " << w << "x" << h << "." << std::endl;
         InitOpenGL();
@@ -112,6 +112,14 @@ namespace Mira
                     _isRunningState = false;
                 }
             }
+            
+            renderer.beginFrame();
+            renderer.render(renderQueue);
+            renderer.endFrame();
+
+            // Present the frame
+            SDL_GL_SwapWindow(_window->GetSDLWindow());
+    
         }
     }
 }

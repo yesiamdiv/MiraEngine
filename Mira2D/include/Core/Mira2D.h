@@ -1,5 +1,4 @@
 #include <Backend/MEBuffer.h>
-#include <Backend/MEOpenGL.h>
 #include <Backend/MEWindow.h>
 
 #include <Core/MEApplication.h>

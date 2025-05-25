@@ -42,3 +42,5 @@ set ( THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR}/Mira2D/third_party)
 #         COMMENT "Copying SDL DLLs to the output directory"
 #     )
 # endif()
+
+target_compile_definitions(MyGame PUBLIC ASSET_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")

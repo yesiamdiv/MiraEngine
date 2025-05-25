@@ -109,3 +109,4 @@ target_link_libraries(Mira2D PRIVATE
 add_dependencies(Mira2D SDL SDL_image SDL_ttf SDL_mixer)
 
 set(SDL_TTF_EXTRA_ARGS -DSDL2TTF_VENDORED=ON -DSDL2TTF_DOWNLOAD_DEPENDENCIES=ON)
+

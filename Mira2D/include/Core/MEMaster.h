@@ -8,52 +8,65 @@
 #include <Core/MEScene.h>
 #include <Core/METransform.h>
 #include <glad/glad.h>
+#include <Graphics/MERenderer.h>
+#include <Graphics/MERenderQueue.h>
 
-using namespace Backend;
+// using namespace Backend;
 
 namespace Mira
 {
 
     class Master
     {
-        Master();
-        ~Master();
-
-        Master(const Master&) = delete;
-        Master operator = (const Master&) = delete;
-
-        static Master* _instance;
-
-    public:
+        
+        public:
         void Setup();
-       
+        
         void Init();
-
+        
         void CreateWindow(const std::string& title, int w, int h);
-
+        
         static Master* GetInstance();
-
+        
         void Run();
-    protected:
+        protected:
         bool InitSDL();
-
+        
         bool InitOpenGL();
-
-
+        
+        //temporary
+        Backend::Window* GetWindow() const
+        {
+            return _window;
+        }
+        
         void MainLoop();
-
-    protected:
-
-
+        
+        protected:
+        
+        
         Backend::Window* _window;
         SDL_GLContext _glContext;
+        
+        Mira::Graphics::MERenderer renderer;
+        Mira::Graphics::MERenderQueue renderQueue;
         
         int _viewportX;
         int _viewportY;
         int _viewportW;
         int _viewportH;
-
+        
         bool _isRunningState = false;
+        
+    private:
+
+        Master();
+        ~Master();
+        
+        Master(const Master&) = delete;
+        Master operator = (const Master&) = delete;
+        
+        static Master* _instance;
     };
     
 }

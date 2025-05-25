@@ -4,10 +4,12 @@ namespace Mira
 {
     Application::Application()
     {
-        //Master::Init();
         auto master = Master::GetInstance();
-
-        if(!master)
+        if(master)
+        {
+            //master->Init();
+        }
+        else
         {
             std::cout << "Could not create master" << std::endl;
             exit(EXIT_FAILURE);

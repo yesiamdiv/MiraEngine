@@ -1,37 +1,35 @@
 #pragma once
 
 #include <string>
-
 #include <SDL.h>
 #include <glad/glad.h>
+//#include <glm/glm.hpp>
 #include <glm.hpp>
-namespace Backend
+
+namespace Mira
 {
-
-    class Window
+    namespace Backend
     {
+        class Window
+        {
+        public:
+            Window(const std::string& title = "Mira Window", int width = 800, int height = 600)
+                : _title(title), _windowSize(width, height), _sdlWindow(nullptr) {}
 
-    public:
-        bool Init(const std::string &title, int width, int height);
+            bool Init(const std::string& title, int width, int height);
 
-        void Shutdown();
+            void Shutdown();
 
-        int GetWidth() const { return _windowSize.y; };
+            int GetWidth() const { return static_cast<int>(_windowSize.x); }
+            int GetHeight() const { return static_cast<int>(_windowSize.y); }
+            glm::vec2 GetWindowSize() const { return _windowSize; }
 
-        int GetHeight() const { return _windowSize.x; };
+            SDL_Window* GetSDLWindow();
 
-        glm::vec2 GetWindowSize() const { return _windowSize; };
-
-        SDL_Window* GetSDLWindow();
-
-    protected:
-        //SDL_GLContext GetGLContext() const { return _glContext; }
-
-        SDL_Window *_sdlWindow;
-        //SDL_GLContext _glContext;
-
-        glm::vec2 _windowSize;
-        const std::string _title;
-    };
-
-} // namespace Mira
+        protected:
+            SDL_Window* _sdlWindow;
+            glm::vec2 _windowSize;
+            std::string _title;
+        };
+    }
+}
