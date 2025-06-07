@@ -3,7 +3,7 @@
 #include <string>
 #include <SDL.h>
 #include <glad/glad.h>
-//#include <glm/glm.hpp>
+#include <glm/glm.hpp>
 #include <glm.hpp>
 
 namespace Mira

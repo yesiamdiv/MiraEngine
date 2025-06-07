@@ -1,2 +1,3 @@
-/build
-/Mira2D/third_party/build/
+/build-debug
+/build-release
+/.vscode
