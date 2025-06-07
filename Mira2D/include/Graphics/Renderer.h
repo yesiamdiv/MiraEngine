@@ -5,7 +5,7 @@
 
 #include <SDL.h>
 #include <glad/glad.h>
-#include <glm.hpp>
+#include <glm/glm.hpp>
 #include <Backend/Window.h>
 
 
