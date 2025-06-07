@@ -14,7 +14,6 @@ include(ExternalProject)
 function(build_sdl_lib name archive_name extra_args)
     set(ARCHIVE_PATH ${SOURCES_DIR}/${archive_name})
     
-    # !!! KEY CHANGE HERE !!!
     # Define the installation base directory for external projects relative to the current binary dir (e.g., build_debug/ or build_release/)
     set(EXTERNAL_INSTALL_BASE_DIR ${CMAKE_BINARY_DIR}/Mira2D/third_party)
 
@@ -77,7 +76,7 @@ if(WIN32)
         $<$<NOT:$<CONFIG:Debug>>:$<$<NOT:$<CONFIG:Release>>:${EXTERNAL_INSTALL_BASE_DIR}/SDL/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2-static${CMAKE_STATIC_LIBRARY_SUFFIX}>>
     )
     set(SDL_MAIN_LIBRARY
-        $<$<CONFIG:Debug>:${EXTERNAL_INSTALL_BASE_BASE_DIR}/SDL/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2maind${CMAKE_STATIC_LIBRARY_SUFFIX}>
+        $<$<CONFIG:Debug>:${EXTERNAL_INSTALL_BASE_DIR}/SDL/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2maind${CMAKE_STATIC_LIBRARY_SUFFIX}>
         $<$<CONFIG:Release>:${EXTERNAL_INSTALL_BASE_DIR}/SDL/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2main${CMAKE_STATIC_LIBRARY_SUFFIX}>
         $<$<NOT:$<CONFIG:Debug>>:$<$<NOT:$<CONFIG:Release>>:${EXTERNAL_INSTALL_BASE_DIR}/SDL/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2main${CMAKE_STATIC_LIBRARY_SUFFIX}>>
     )
