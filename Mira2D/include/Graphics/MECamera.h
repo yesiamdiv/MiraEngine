@@ -1,9 +1,0 @@
-
-namespace Mira
-{
-    namespace Graphics
-    {
-        
-    }
-    
-}
