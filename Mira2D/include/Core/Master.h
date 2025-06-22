@@ -3,7 +3,7 @@
 #include <Backend/Window.h>
 #include <Graphics/Renderer.h>
 #include <SDL.h>
-#include <SDL_Image.h>
+#include <SDL_image.h>
 #include <SDL_ttf.h>
 
 namespace Mira

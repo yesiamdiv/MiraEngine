@@ -75,24 +75,40 @@ cmake -E remove_directory build
 
 #### **Linux/macOS**
 
-1.  **Configure for Debug:**
+Before building, you need to install system-level development libraries required by SDL2_mixer and other components.
+
+1.  **Make the installation script executable:**
+    ```sh
+    chmod +x scripts/install_dependencies_dnf.sh # if on dnf packege installer
+    chmod +x scripts/install_dependencies_apt.sh # if on apt packege installer
+    ```
+2.  **Run the script to install dependencies:**
+    ```sh
+    ./scripts/install_dependencies_dnf.sh # if on dnf packege installer
+    ./scripts/install_dependencies_apt.sh # if on apt packege installer
+    ```
+    This command will update your package lists and install necessary libraries using `sudo apt install`. You will be prompted for your `sudo` password.
+
+    * **Note for Windows users:** This step is not required on Windows as all dependencies are handled by CMake's `ExternalProject` module.
+
+3.  **Configure for Debug:**
     ```sh
     mkdir build_debug
     cd build_debug
     cmake .. -DCMAKE_BUILD_TYPE=Debug
     ```
-2.  **Build Debug:**
+4.  **Build Debug:**
     ```sh
     make -j$(nproc) # Use -j for parallel compilation (e.g., -j8 for 8 cores)
     ```
-3.  **Configure for Release:**
+5.  **Configure for Release:**
     ```sh
     cd .. # Go back to project root
     mkdir build_release
     cd build_release
     cmake .. -DCMAKE_BUILD_TYPE=Release
     ```
-4.  **Build Release:**
+6.  **Build Release:**
     ```sh
     make -j$(nproc)
     ```

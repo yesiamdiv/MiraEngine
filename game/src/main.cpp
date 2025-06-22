@@ -1,7 +1,6 @@
 #include <Core/Master.h>
 #include <iostream>
 
-//GET_ASSET_PATH("//lol")
 
 using namespace Mira;
 
@@ -14,6 +13,7 @@ int main(int argc, char* argv[])
         std::cout << "Failed to initialize master" << std::endl;
         return -1;
     }
+    std::cout<<ASSET_PATH;
     master->Run();
 
     return 0;
