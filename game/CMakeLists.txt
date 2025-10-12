@@ -1,46 +1,54 @@
-# Define the project
-project(MyGame)
+# Mira Engine - game/CMakeLists.txt
+# =================================
+# This file builds the game executable.
 
-# Specify the C++ standard
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Create an executable target for the game.
+add_executable(game)
 
-# Set the game source directory
-set(GAME_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(GAME_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# Add all game source files from the src/ directory.
+file(GLOB_RECURSE GAME_SOURCES "src/*.cpp")
+target_sources(game PRIVATE ${GAME_SOURCES})
 
-# Add game headers and sources
-file(GLOB_RECURSE HEADER_FILES ${GAME_INCLUDE_DIR}/**.h)
-file(GLOB_RECURSE SOURCE_FILES ${GAME_SRC_DIR}/**.cpp)
-
-# Create the game executable
-add_executable(MyGame ${SOURCE_FILES} ${HEADER_FILES} )
-
-# Link the engine and dependencies
-target_include_directories(MyGame PRIVATE 
-    ${CMAKE_SOURCE_DIR}/game/include
-    ${CMAKE_SOURCE_DIR}/Mira2D/include 
+# Define public and private include directories.
+target_include_directories(game
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    PRIVATE
+        src
 )
-target_link_libraries(MyGame PRIVATE Mira2D)
 
-# Ensure MyGame depends on Mira2D
-add_dependencies(MyGame Mira2D)
+# Link the game executable against the Mira Engine static library.
+# This automatically brings in all of Mira's dependencies as well (like SDL2).
+target_link_libraries(game PRIVATE Mira2D)
 
-set ( THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR}/Mira2D/third_party)
-# Copy DLLs after build (Windows only)
-# if(WIN32)
-#     set(DLL_OUTPUT_DIR $<TARGET_FILE_DIR:MyGame>)  # Output to the same dir as MyGame.exe
+# Define the output directory for the executable.
+set_target_properties(game PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-#     add_custom_command(TARGET MyGame POST_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#             ${THIRD_PARTY_DIR}/SDL/lib/x64/SDL2.dll
-#             ${THIRD_PARTY_DIR}/SDL_image/lib/x64/SDL2_image.dll
-#             ${THIRD_PARTY_DIR}/SDL_ttf/lib/x64/SDL2_ttf.dll
-#             ${THIRD_PARTY_DIR}/SDL_mixer/lib/x64/SDL2_mixer.dll
-#             ${DLL_OUTPUT_DIR}
-            
-#         COMMENT "Copying SDL DLLs to the output directory"
-#     )
-# endif()
+# --- Asset Handling for the Game ---
+# Copy game assets to the build output directory.
+file(COPY ${MIRA_GAME_ASSETS_DIR}/ DESTINATION ${MIRA_ASSETS_OUTPUT_DIR}/game)
 
-target_compile_definitions(MyGame PUBLIC ASSET_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
+# --- Windows Specific: Copy DLLs ---
+# On Windows, SDL2 and its libraries are built as shared libraries (.dll).
+# This custom command runs after the build is finished and copies the necessary
+# .dll files into the same directory as the game.exe so it can run.
+if(WIN32)
+    add_custom_command(
+        TARGET game POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_FILE:SDL2::SDL2>"
+            "$<TARGET_FILE_DIR:game>"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_FILE:SDL2_image::SDL2_image>"
+            "$<TARGET_FILE_DIR:game>"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_FILE:SDL2_mixer::SDL2_mixer>"
+            "$<TARGET_FILE_DIR:game>"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_FILE:SDL2_ttf::SDL2_ttf>"
+            "$<TARGET_FILE_DIR:game>"
+        COMMENT "Copying required SDL2 DLLs to executable directory..."
+    )
+endif()
+

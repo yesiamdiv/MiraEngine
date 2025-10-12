@@ -4,7 +4,7 @@
 #include <unordered_map>
 
 #include <SDL.h>
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <glm/glm.hpp>
 #include <Backend/Window.h>
 

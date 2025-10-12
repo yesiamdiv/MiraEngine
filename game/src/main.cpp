@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
         std::cout << "Failed to initialize master" << std::endl;
         return -1;
     }
-    std::cout<<ASSET_PATH;
+    // std::cout<<ASSET_PATH;
     master->Run();
 
     return 0;
