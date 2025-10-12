@@ -3,9 +3,14 @@
 # This file builds the Mira Engine as a static library.
 
 # --- Local Third-Party Libraries --------------------------------------------
-# Add pre-downloaded libraries from the thirdparty folder.
-# This makes them available as targets to link against.
-add_subdirectory(thirdparty/glad)
+# Automatically find and build any local libraries placed in the 'thirdparty' folder.
+file(GLOB subdirectories CONFIGURE_DEPENDS "thirdparty/*")
+foreach(subdirectory ${subdirectories})
+    if(IS_DIRECTORY ${subdirectory} AND EXISTS "${subdirectory}/CMakeLists.txt")
+        add_subdirectory(${subdirectory})
+        # Note: You still need to manually link these below.
+    endif()
+endforeach()
 
 
 # --- Mira Engine Target -----------------------------------------------------
@@ -21,31 +26,24 @@ target_include_directories(Mira2D
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
-        # Add the generated files directory to the include path
         $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/generated>
     PRIVATE
         src
 )
 
-# Link the engine against its dependencies.
-# We link against 'glad' which we added via add_subdirectory.
+# --- Library Linking ---
+# NOTE: All remote dependencies (SDL, GLM, etc.) are now linked automatically
+# by the mira_add_dependency() function in cmake/dependencies.cmake.
+# We only need to link the local libraries found in our thirdparty folder here.
 target_link_libraries(Mira2D PUBLIC
-    SDL2::SDL2
-    SDL2::SDL2main
-    SDL2_image::SDL2_image
-    SDL2_mixer::SDL2_mixer
-    SDL2_ttf::SDL2_ttf
-    glm::glm
-    glad
+    glad # From the mira/thirdparty folder
 )
 
-# On Windows, we need to link against OpenGL. On other systems, SDL handles this.
+# On Windows, we still need to link against OpenGL.
 if(WIN32)
     target_link_libraries(Mira2D PUBLIC opengl32)
 endif()
 
 # --- Asset Handling for the Engine ---
-# Copy engine assets to the build output directory.
-# This ensures they are available when running the built executable.
 file(COPY ${MIRA_ENGINE_ASSETS_DIR}/ DESTINATION ${MIRA_ASSETS_OUTPUT_DIR}/engine)
 

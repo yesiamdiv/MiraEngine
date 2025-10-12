@@ -1,5 +1,5 @@
 #include <Graphics/Renderer.h>
-#include <Utils/AssetPath.h>
+#include <paths.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -83,7 +83,7 @@ namespace Mira
         {
             std::string shaderName = "default_shader_program";
 
-            AddShaderProgram(shaderName, GET_ASSET_PATH("Shaders/VertexShader.glsl"), GET_ASSET_PATH("Shaders/FragmentShader.glsl"));
+            AddShaderProgram(shaderName, std::string(ASSETS_PATH) + std::string("Shaders/VertexShader.glsl"), std::string(ASSETS_PATH) + std::string("Shaders/FragmentShader.glsl"));
 
             ShaderProgram shaderProgram = CreateShaderProgram(shaderName);
 
