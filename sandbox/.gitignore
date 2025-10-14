@@ -1,0 +1,22 @@
+# .gitignore for the sandbox/ directory
+# This file prevents test code and assets from being committed,
+# while preserving the directory structure for the template.
+# Ignore all contents of the source and include directories...
+/src/*
+/include/*
+
+# ...but explicitly keep the .gitkeep files so the directories are tracked.
+!/src/.gitkeep
+!/include/.gitkeep
+
+# Ignore all contents of the assets directory...
+/assets/*
+
+# ...but keep its .gitkeep file.
+!/assets/.gitkeep
+
+# Also ignore contents of the game-specific thirdparty folder...
+/thirdparty/*
+
+# ...but keep its .gitkeep file.
+!/thirdparty/.gitkeep

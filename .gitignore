@@ -1,4 +1,27 @@
-/build_debug
-/build_release
-/build
-.vscode/
+#CMake build files
+build/
+*.VC.db
+*.VC.VC.opendb
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CMakeLists.txt.user
+install_manifest.txt
+
+#Visual Studio files
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+#Binaries
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+*.out
+
+#Other
+.DS_Store
+.vscode
