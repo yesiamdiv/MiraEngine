@@ -2,6 +2,13 @@
 # =================================
 # This file builds the Mira Engine as a static library.
 
+
+# --- Source File Collection ---
+# Gather all .cpp files for compilation and .hpp files for the IDE.
+# CONFIGURE_DEPENDS ensures CMake re-runs if you add/remove files.
+file(GLOB_RECURSE MIRA_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
+file(GLOB_RECURSE MIRA_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+
 # --- Local Third-Party Libraries --------------------------------------------
 # Automatically find and build any local libraries placed in the 'thirdparty' folder.
 file(GLOB subdirectories CONFIGURE_DEPENDS "thirdparty/*")
@@ -15,11 +22,11 @@ endforeach()
 
 # --- Mira Engine Target -----------------------------------------------------
 # Create a static library target for the engine.
-add_library(Mira2D STATIC)
+add_library(Mira2D STATIC ${MIRA_SOURCES})
 
 # Add all source files from the src/ directory.
-file(GLOB_RECURSE MIRA_SOURCES "src/*.cpp")
-target_sources(Mira2D PRIVATE ${MIRA_SOURCES})
+# file(GLOB_RECURSE MIRA_SOURCES "src/*.cpp")
+target_sources(Mira2D PRIVATE ${MIRA_SOURCES} ${MIRA_HEADERS})
 
 # Define public and private include directories.
 target_include_directories(Mira2D
